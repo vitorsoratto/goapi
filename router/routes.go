@@ -18,6 +18,12 @@ func initRoutes(router *gin.Engine) {
 
 	ProductController := controller.NewProductController(ProductUsecase)
 
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "Healthy",
+		})
+	})
+
 	api := router.Group(basePath)
 	{
 		api.GET("/products", ProductController.GetProducts)
