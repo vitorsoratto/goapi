@@ -1,0 +1,35 @@
+version : "3.9"
+
+services:
+  goapi:
+    container_name: goapi
+    image: goapi
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - pgsql
+    networks:
+      - apinetwork
+
+  pgsql:
+    image: postgres:12
+    container_name: pgsql
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: goapi
+    ports:
+      - 5432:5432
+    volumes:
+      - pgsqldata:/var/lib/postgresql/data
+    networks:
+      - apinetwork
+
+volumes:
+  pgsqldata: {}
+
+networks:
+  apinetwork:
+    driver: bridge
