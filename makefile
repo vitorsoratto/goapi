@@ -12,3 +12,5 @@ run-build:
 	@docker-compose down
 	@docker-compose up -d --build 
 
+rundb:
+	@docker-compose up -d pgsql
