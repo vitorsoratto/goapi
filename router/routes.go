@@ -12,12 +12,7 @@ import (
 const basePath = "/api"
 
 func initRoutes(router *gin.Engine) {
-	ProductRepository := repository.NewProductRepository(config.Database)
-
-	ProductUsecase := usecase.NewProductUsecase(ProductRepository)
-
-	ProductController := controller.NewProductController(ProductUsecase)
-
+	initStructure()
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "Healthy",
@@ -26,8 +21,35 @@ func initRoutes(router *gin.Engine) {
 
 	api := router.Group(basePath)
 	{
-		api.GET("/products", ProductController.GetProducts)
-		api.GET("/product", ProductController.GetProductByID)
-		api.POST("/product", ProductController.InsertProduct)
+		// Notification Apps
+		api.GET("/notification-apps", notificationAppController.GetList)
+
+		// Notification
+		api.GET("/notifications", notificationController.GetList)
 	}
+}
+
+var (
+	notificationAppRepository *repository.NotificationAppRepository
+	notificationAppUsecase *usecase.NotificationAppUsecase
+	notificationAppController *controller.NotificationAppController
+
+
+	notificationRepository *repository.NotificationRepository
+	notificationUsecase *usecase.NotificationUsecase
+	notificationController *controller.NotificationController
+)
+
+func initStructure() {
+	// Repositories
+	notificationAppRepository = repository.NewNotificationAppRepository(config.Database)
+	notificationRepository = repository.NewNotificationRepository(config.Database)
+
+	// Usecases
+	notificationAppUsecase = usecase.NewNotificationAppUsecase(notificationAppRepository)
+	notificationUsecase = usecase.NewNotificationUsecase(notificationRepository)
+
+	// Controllers
+	notificationAppController = controller.NewNotificationAppController(notificationAppUsecase)
+	notificationController = controller.NewNotificationController(notificationUsecase)
 }
