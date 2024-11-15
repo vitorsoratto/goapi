@@ -28,3 +28,25 @@ type Notification struct {
 	URLLauncher   *string
 	TimesSent     uint `gorm:"default:0"`
 }
+
+type NotificationResponse struct {
+	ID            int        `json:"id"`
+	AppID         int        `json:"app_id"`
+	Title         string     `json:"title"`
+	Body          string     `json:"body"`
+	Image         *string    `json:"image"`
+	ToChannel     string     `json:"to_channel"`
+	LastExecution *time.Time `json:"last_execution"`
+	ExecuteAt     *string    `json:"execute_at"`
+	Sun           string     `json:"sun"`
+	Mon           string     `json:"mon"`
+	Tue           string     `json:"tue"`
+	Wed           string     `json:"wed"`
+	Thu           string     `json:"thu"`
+	Fri           string     `json:"fri"`
+	Sat           string     `json:"sat"`
+	Active        bool       `json:"active"`
+	MonthDay      *uint8     `json:"monthDay"`
+	URLLauncher   *string    `json:"url_launcher"`
+	TimesSent     uint       `json:"times_sent"`
+}

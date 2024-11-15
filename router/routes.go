@@ -22,22 +22,22 @@ func initRoutes(router *gin.Engine) {
 	api := router.Group(basePath)
 	{
 		// Notification Apps
-		api.GET("/notification-apps", notificationAppController.GetList)
+		api.GET("/notification-apps", NotificationAppController.GetList)
 
 		// Notification
-		api.GET("/notifications", notificationController.GetList)
+		api.GET("/notifications", NotificationController.GetList)
 	}
 }
 
 var (
 	notificationAppRepository *repository.NotificationAppRepository
 	notificationAppUsecase *usecase.NotificationAppUsecase
-	notificationAppController *controller.NotificationAppController
+	NotificationAppController *controller.NotificationAppController
 
 
 	notificationRepository *repository.NotificationRepository
 	notificationUsecase *usecase.NotificationUsecase
-	notificationController *controller.NotificationController
+	NotificationController *controller.NotificationController
 )
 
 func initStructure() {
@@ -50,6 +50,6 @@ func initStructure() {
 	notificationUsecase = usecase.NewNotificationUsecase(notificationRepository)
 
 	// Controllers
-	notificationAppController = controller.NewNotificationAppController(notificationAppUsecase)
-	notificationController = controller.NewNotificationController(notificationUsecase)
+	NotificationAppController = controller.NewNotificationAppController(notificationAppUsecase)
+	NotificationController = controller.NewNotificationController(notificationUsecase)
 }
